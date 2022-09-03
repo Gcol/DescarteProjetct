@@ -16,6 +16,9 @@ public class MainLoop : MonoBehaviour
     public GameObject Dialogue;
 
     public CameraAnimationController camControl;
+    public CameraAnimationController fadeController;
+    public CameraAnimationController cadreController;
+    public CameraAnimationController textCadreController;
 
     public bool endingDay;
     public bool beginingDay;
@@ -42,12 +45,25 @@ public class MainLoop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camControl.ChangeAnimation(CAMERA_GO_PLAY);
+        motiv.InverseMotivationLose();
         dayWithMiniGame.Add(1);
         dayWithMiniGame.Add(3);
         dayWithMiniGame.Add(5);
+        StartCoroutine(CoRoutineStart());
+    }
+
+
+    IEnumerator CoRoutineStart()
+    {
+        fadeController.ChangeAnimation("FadeIn");
+        cadreController.ChangeAnimation("TextFadeIn");
+        textCadreController.ChangeAnimation("TextFadeIn");
+        yield return new WaitForSeconds(2);
+        camControl.ChangeAnimation(CAMERA_GO_PLAY);
+        yield return new WaitForSeconds(1);
         camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
-        isRightPC = false;
+        motiv.InverseMotivationLose();
+
     }
 
     // Update is called once per frame
@@ -64,7 +80,6 @@ public class MainLoop : MonoBehaviour
 
                 }
                 else {
-                    nbDay += 1;
 
                     if (dayWithMiniGame.Contains(nbDay % 5)){
                         camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
@@ -76,7 +91,6 @@ public class MainLoop : MonoBehaviour
                     }
 
                     MainTimer.reset();
-                    DayTxt.text = nbDay.ToString();
                 }
             }
         }
@@ -90,6 +104,11 @@ public class MainLoop : MonoBehaviour
     }
 
     public void NewDay()
+    {
+        StartCoroutine(CoRoutineNewDay());
+    }
+
+    IEnumerator CoRoutineNewDay()
     {
 
         if (isRightPC == true)
@@ -105,6 +124,17 @@ public class MainLoop : MonoBehaviour
         {
             camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
         }
+        yield return new WaitForSeconds(1);
+        nbDay += 1;
+        DayTxt.text = nbDay.ToString();
+        fadeController.ChangeAnimation("FadeOut");
+        cadreController.ChangeAnimation("TextFadeOut");
+        textCadreController.ChangeAnimation("TextFadeOut");
+        yield return new WaitForSeconds(3);
+        fadeController.ChangeAnimation("FadeIn");
+        cadreController.ChangeAnimation("TextFadeIn");
+        textCadreController.ChangeAnimation("TextFadeIn");
+        yield return new WaitForSeconds(1);
         endingDay = true;
     }
 
@@ -125,12 +155,13 @@ public class MainLoop : MonoBehaviour
 
     public void NextDialogue()
     {
+        Debug.Log("TEST");
         UnClope();
     }
 
     IEnumerator UnUpdateCamClope()
     {
-        Dialogue.SetActive(false);
+        Dialogue.GetComponent<Image>().enabled = false;
         camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
         yield return new WaitForSeconds(1);
         if (isRightPC){
@@ -162,6 +193,6 @@ public class MainLoop : MonoBehaviour
         isPauseClope = true;
         yield return new WaitForSeconds(2.5f);
         motiv.InverseMotivationLose();
-        Dialogue.SetActive(true);
+        Dialogue.GetComponent<Image>().enabled = true;
     }
 }

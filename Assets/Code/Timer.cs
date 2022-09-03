@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 {
     public float MaxTime;
 
-    private bool TimerOn = false;
+    public bool TimerOn = false;
     private float TimeLeft;
     private float SpeedTime = 0;
 
