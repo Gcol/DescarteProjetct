@@ -23,11 +23,13 @@ public class MotivationBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentHealth += (Time.deltaTime * SpeedDecrease);
+        if (currentHealth != maxHealth || SpeedDecrease < 1)
+        {
+            currentHealth += (Time.deltaTime * SpeedDecrease);
+        }
 
         if (currentHealth > maxHealth)
         {
-            Debug.Log("Problème valeur de currentHealt Trop haute");
             currentHealth = maxHealth;
         }
         current_percent = currentHealth / maxHealth;

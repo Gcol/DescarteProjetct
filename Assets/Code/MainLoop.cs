@@ -12,6 +12,8 @@ public class MainLoop : MonoBehaviour
 
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
+    public MotivationBar motiv;
+    public GameObject Dialogue;
 
     public CameraAnimationController camControl;
 
@@ -111,41 +113,55 @@ public class MainLoop : MonoBehaviour
         Debug.Log("Fin de parti");
     }
 
-    public void Clope()
+    public void GoClope()
     {
         StartCoroutine(UpdateCamClope());
     }
 
+    public void UnClope()
+    {
+        StartCoroutine(UnUpdateCamClope());
+    }
+
+    public void NextDialogue()
+    {
+        UnClope();
+    }
+
+    IEnumerator UnUpdateCamClope()
+    {
+        Dialogue.SetActive(false);
+        camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
+        yield return new WaitForSeconds(1);
+        if (isRightPC){
+            camControl.ChangeAnimation(CAMERA_GO_PC_RIGHT);
+        }
+        else
+        {
+            camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
+        }
+        isPauseClope = false;
+        yield return new WaitForSeconds(1);
+        motiv.InverseMotivationLose();
+        MainTimer.ChangeFreeze();
+    }
+
     IEnumerator UpdateCamClope()
     {
-        if (isPauseClope == false)
+        MainTimer.ChangeFreeze();
+        if (isRightPC){
+            camControl.ChangeAnimation(CAMERA_GO_PC_UN_RIGHT);
+        }
+        else
         {
-            MainTimer.ChangeFreeze();
-            if (isRightPC){
-                camControl.ChangeAnimation(CAMERA_GO_PC_UN_RIGHT);
-            }
-            else
-            {
-                camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
-            }
-            yield return new WaitForSeconds(1);
+            camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
+        }
+        yield return new WaitForSeconds(1);
 
-            camControl.ChangeAnimation(CAMERA_GO_PAUSE);
-            isPauseClope = true;
-        }
-        else {
-            camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
-            yield return new WaitForSeconds(1);
-            if (isRightPC){
-                camControl.ChangeAnimation(CAMERA_GO_PC_RIGHT);
-            }
-            else
-            {
-                camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
-            }
-            isPauseClope = false;
-            yield return new WaitForSeconds(1);
-            MainTimer.ChangeFreeze();
-        }
+        camControl.ChangeAnimation(CAMERA_GO_PAUSE);
+        isPauseClope = true;
+        yield return new WaitForSeconds(2.5f);
+        motiv.InverseMotivationLose();
+        Dialogue.SetActive(true);
     }
 }

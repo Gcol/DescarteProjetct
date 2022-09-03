@@ -62,7 +62,6 @@ public class Timer : MonoBehaviour
 
     public void ChangeFreeze(){
         TimerOn = !TimerOn;
-        motiv.InverseMotivationLose();
     }
 
 }
