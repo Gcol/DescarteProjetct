@@ -6,16 +6,20 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public float TimeLeft;
-    public bool TimerOn = false;
-    public float SpeedTime = 1;
+    public float MaxTime;
 
-    public TextMeshProUGUI  TimerTxt;
+    private bool TimerOn = false;
+    private float TimeLeft;
+    private float SpeedTime = 0;
+
+    public TextMeshProUGUI TimerTxt;
+    public MotivationBar motiv;
+    public MainLoop mainGame;
 
     // Start is called before the first frame update
     void Start()
     {
-        TimerOn = true;
+        reset();
     }
 
     // Update is called once per frame
@@ -23,29 +27,42 @@ public class Timer : MonoBehaviour
     {
         if (TimerOn)
         {
-
+            SpeedTime = (100 - (motiv.get_percent() * 100)) / 4;
             if (TimeLeft > 0)
             {
                 TimeLeft -= (Time.deltaTime * SpeedTime);
-                updateTimer(TimeLeft);
-                SpeedTime += 0.0001f;
             }
             else
             {
                 Debug.Log("Time is Up");
                 TimeLeft = 0;
                 TimerOn = false;
+                mainGame.NewDay();
+
             }
+            updateTimer(TimeLeft);
         }
     }
 
     void updateTimer(float currentTime)
     {
-        currentTime += 1;
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float secondes = Mathf.FloorToInt(currentTime % 60);
 
         TimerTxt.text = string.Format("{0:00} : {1:00}", minutes, secondes);
     }
+
+    public void reset()
+    {
+        TimerOn = true;
+        TimeLeft = MaxTime;
+        motiv.reset();
+    }
+
+    public void ChangeFreeze(){
+        TimerOn = !TimerOn;
+        motiv.InverseMotivationLose();
+    }
+
 }

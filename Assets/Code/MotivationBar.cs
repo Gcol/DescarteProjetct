@@ -7,18 +7,46 @@ public class MotivationBar : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth ;
+    static public float current_percent;
+    public float StartDebuf = 50;
+
+    public float SpeedDecrease = -3f;
 
     public Image HealthBar;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        reset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HealthBar.fillAmount = currentHealth / maxHealth;
+        currentHealth += (Time.deltaTime * SpeedDecrease);
+
+        if (currentHealth > maxHealth)
+        {
+            Debug.Log("Problème valeur de currentHealt Trop haute");
+            currentHealth = maxHealth;
+        }
+        current_percent = currentHealth / maxHealth;
+        HealthBar.fillAmount = current_percent;
     }
+
+    public float get_percent()
+    {
+        return current_percent;
+    }
+
+    public void reset()
+    {
+        currentHealth = maxHealth - StartDebuf;
+    }
+
+    public void InverseMotivationLose()
+    {
+     SpeedDecrease *= -1;
+    }
+
 }
