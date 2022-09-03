@@ -15,6 +15,10 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI TimerTxt;
     public MotivationBar motiv;
     public MainLoop mainGame;
+    public SpriteRenderer Arrow;
+
+    private float baseAngle = 130f;
+    private int divAngle = 255;
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +35,17 @@ public class Timer : MonoBehaviour
             if (TimeLeft > 0)
             {
                 TimeLeft -= (Time.deltaTime * SpeedTime);
+                float z = baseAngle - ((100 -(TimeLeft / MaxTime)) * divAngle);
+                Debug.Log( Arrow.transform.rotation.z);
+                Debug.Log(z);
+                Arrow.transform.rotation = Quaternion.Euler(
+                    Arrow.transform.rotation.x,
+                    Arrow.transform.rotation.y,
+                    z
+                );
             }
             else
             {
-                Debug.Log("Time is Up");
                 TimeLeft = 0;
                 TimerOn = false;
                 mainGame.NewDay();
