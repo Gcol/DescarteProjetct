@@ -1971,7 +1971,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDay: 5
-  currentNbClope: 0
   FreezeTimer: 0
   DayTxt: {fileID: 1763836723}
   MainTimer: {fileID: 1956565245}
@@ -1985,8 +1984,10 @@ MonoBehaviour:
   fadeController: {fileID: 1709067702}
   cadreController: {fileID: 604724464}
   textCadreController: {fileID: 1763836720}
+  clopAnimation: {fileID: 2093400824}
   endingDay: 0
   beginingDay: 0
+  maxClope: 3
 --- !u!114 &1043659794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4168,6 +4169,8 @@ GameObject:
   - component: {fileID: 2093400819}
   - component: {fileID: 2093400821}
   - component: {fileID: 2093400822}
+  - component: {fileID: 2093400824}
+  - component: {fileID: 2093400823}
   m_Layer: 0
   m_Name: clope
   m_TagString: Untagged
@@ -4281,6 +4284,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22, y: 0.3}
   m_EdgeRadius: 0
+--- !u!95 &2093400823
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093400818}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef95baa598ed6764d94ed5201ac26f94, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2093400824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093400818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86fbb29001145984d9f748b5773addb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2093400823}
+  currentState: 
+  nextState: 
 --- !u!1 &2101399579
 GameObject:
   m_ObjectHideFlags: 0

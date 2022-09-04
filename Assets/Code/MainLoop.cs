@@ -9,7 +9,7 @@ public class MainLoop : MonoBehaviour
 {
     int nbDay = 1;
     public int maxDay = 5;
-    public int currentNbClope ;
+    int currentNbClope;
 
     public bool FreezeTimer;
 
@@ -32,6 +32,7 @@ public class MainLoop : MonoBehaviour
     public CameraAnimationController fadeController;
     public CameraAnimationController cadreController;
     public CameraAnimationController textCadreController;
+    public CameraAnimationController clopAnimation;
 
 
     //Variable pour gerer les cas d overlap d animation peux etre remplacer par des co Routines
@@ -53,7 +54,7 @@ public class MainLoop : MonoBehaviour
     const string CAMERA_GO_IDLE = "Idle";
 
     //Constate
-    const int maxClope = 3;
+    public int maxClope = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -63,12 +64,11 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineStart()
     {
-        currentNbClope = 1;
+        clopAnimation.ChangeAnimation("Clop3");
+        currentNbClope = maxClope;
         Dialogue.GetComponent<Image>().enabled = false;
         Dialogue.GetComponent<Button>().enabled = false;
-        fadeController.ChangeAnimation("FadeIn");
-        cadreController.ChangeAnimation("TextFadeIn");
-        textCadreController.ChangeAnimation("TextFadeIn");
+        FadeInAnimation();
         yield return new WaitForSeconds(2);
         motivationBar.SetActive(true);
         camControl.ChangeAnimation(CAMERA_GO_PLAY);
@@ -76,6 +76,20 @@ public class MainLoop : MonoBehaviour
         StartCoroutine(CoRoutineActiveLeftPc(true));
         yield return new WaitForSeconds(1);
         MainTimer.SetTimer(true);
+    }
+
+    void FadeInAnimation()
+    {
+        fadeController.ChangeAnimation("FadeIn");
+        cadreController.ChangeAnimation("TextFadeIn");
+        textCadreController.ChangeAnimation("TextFadeIn");
+    }
+
+    void FadeOutAnimation()
+    {
+        fadeController.ChangeAnimation("FadeOut");
+        cadreController.ChangeAnimation("TextFadeOut");
+        textCadreController.ChangeAnimation("TextFadeOut");
     }
 
     IEnumerator CoRoutineActiveLeftPc(bool starting)
@@ -129,7 +143,8 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineNewDay()
     {
-        currentNbClope = 1;
+        currentNbClope = maxClope;
+        clopAnimation.ChangeAnimation("Clop3");
         endingDay = true;
         if (isPauseClope == true)
         {
@@ -144,14 +159,10 @@ public class MainLoop : MonoBehaviour
         nbDay += 1;
         DayTxt.text = nbDay.ToString();
         motivationBar.SetActive(false);
-        fadeController.ChangeAnimation("FadeOut");
-        cadreController.ChangeAnimation("TextFadeOut");
-        textCadreController.ChangeAnimation("TextFadeOut");
+        FadeOutAnimation();
         MainTimer.reset();
         yield return new WaitForSeconds(3);
-        fadeController.ChangeAnimation("FadeIn");
-        cadreController.ChangeAnimation("TextFadeIn");
-        textCadreController.ChangeAnimation("TextFadeIn");
+        FadeInAnimation();
         motivationBar.SetActive(true);
         yield return new WaitForSeconds(1);
         endingDay = false;
@@ -165,12 +176,15 @@ public class MainLoop : MonoBehaviour
 
     public void GoClope()
     {
-        if (endingDay == false && currentNbClope < maxClope){StartCoroutine(UpdateCamClope());}
+        currentNbClope -= 1;
+        if (currentNbClope == 2) clopAnimation.ChangeAnimation("Clope2");
+        if (currentNbClope == 1) clopAnimation.ChangeAnimation("Clope1");
+        if (currentNbClope == 0) clopAnimation.ChangeAnimation("Clope0");
+        if (endingDay == false && currentNbClope >= 0){StartCoroutine(UpdateCamClope());}
     }
 
     public void UnClope()
     {
-        currentNbClope += 1;
         StartCoroutine(UnUpdateCamClope());
         motiv.pozClopeMotivBoost();
     }
