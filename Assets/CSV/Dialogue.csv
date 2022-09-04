@@ -1,3 +1,16 @@
 ID_Dialogue,Personnage,Text1,Text2,Text3,Text4,Text5
-1,Kiram,Bonjour,Haha !,Tu ne m attendais pas ici ?,N est ce pas ?,Retourne Travailler !
-2,NPC-1,Tu veux une astuce ?,Simple pour le QCM,Il n y as toujours qu une seul bonne reponse,Ettonant non ?,Bon je dois y aller
+1,Kiram,Bonjour,"Ah-ha ! Tu ne t attendais pas a me voir ici, pas vrai ?","Ce n est pas bien de gaspiller son temps, chef","Tu dois etre serieux – je compte sur toi, c est tres decevant","Maintenant, retourne travailler – je t ai a l œil, sache-le"
+2,Kiram,,,,,
+3,NPC-1,"Hey, tu veux que je te donne une astuce ?","Ecoute-moi bien – tu sais, le QCM qu on doit remplir chaque jour ?",Il n y a qu une seule bonne reponse par jour – jamais plus,J aurais aime que quelqu un me le dise a moi aussi,"Bon, je dois y aller"
+4,NPC-1,,,,,
+5,NPC-1,,,,,
+6,NPC-1,,,,,
+7,NPC-1,,,,,
+8,NPC-1,,,,,
+9,NPC-1,,,,,
+10,NPC-1,,,,,
+11,NPC-1,,,,,
+12,NPC-1,,,,,
+13,NPC-1,,,,,
+14,NPC-1,,,,,
+15,NPC-1,,,,,
