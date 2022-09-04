@@ -9,22 +9,30 @@ public class MainLoop : MonoBehaviour
 {
     int nbDay = 1;
     public int maxDay = 5;
+    public int currentNbClope ;
 
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
     public MotivationBar motiv;
     public GameObject Dialogue;
 
+    public DialogueHandler dialHandler;
+
+    // Game Object as desactiver en fonction des Zoom de Camera
     public GameObject AffichageQCM;
     public GameObject motivationBar;
 
+
     public QcmHandler currentQcm;
 
+    // Animator utiliser pour lancer les animation
     public CameraAnimationController camControl;
     public CameraAnimationController fadeController;
     public CameraAnimationController cadreController;
     public CameraAnimationController textCadreController;
 
+
+    //Variable pour gerer les cas d overlap d animation peux etre remplacer par des co Routines
     public bool endingDay;
     public bool beginingDay;
 
@@ -42,6 +50,8 @@ public class MainLoop : MonoBehaviour
     const string CAMERA_GO_PLAY = "Play";
     const string CAMERA_GO_IDLE = "Idle";
 
+    //Constate
+    const int maxClope = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +60,9 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineStart()
     {
+        currentNbClope = 1;
+        Dialogue.GetComponent<Image>().enabled = false;
+        Dialogue.GetComponent<Button>().enabled = false;
         fadeController.ChangeAnimation("FadeIn");
         cadreController.ChangeAnimation("TextFadeIn");
         textCadreController.ChangeAnimation("TextFadeIn");
@@ -113,6 +126,7 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineNewDay()
     {
+        currentNbClope = 1;
         endingDay = true;
         if (isPauseClope == true)
         {
@@ -148,11 +162,12 @@ public class MainLoop : MonoBehaviour
 
     public void GoClope()
     {
-        if (endingDay == false){StartCoroutine(UpdateCamClope());}
+        if (endingDay == false && currentNbClope < maxClope){StartCoroutine(UpdateCamClope());}
     }
 
     public void UnClope()
     {
+        currentNbClope += 1;
         StartCoroutine(UnUpdateCamClope());
         motiv.pozClopeMotivBoost();
     }
@@ -161,6 +176,7 @@ public class MainLoop : MonoBehaviour
     {
         AffichageQCM.SetActive(false);
         Dialogue.GetComponent<Image>().enabled = false;
+        Dialogue.GetComponent<Button>().enabled = false;
         camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
         yield return new WaitForSeconds(2.5f);
         StartCoroutine(CoRoutineActiveLeftPc(false));
@@ -179,6 +195,9 @@ public class MainLoop : MonoBehaviour
         camControl.ChangeAnimation(CAMERA_GO_PAUSE);
         isPauseClope = true;
         yield return new WaitForSeconds(2.5f);
+        dialHandler.NextDialogue();
         Dialogue.GetComponent<Image>().enabled = true;
+        Dialogue.GetComponent<Button>().enabled = true;
+
     }
 }

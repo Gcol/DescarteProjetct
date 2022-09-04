@@ -1,3 +1,3 @@
-ID_Dialogue,Personnage,Text1,Text2,Text3,Text4,Text5,Text6,Text7,Text8,Text9,Text10
-1,Kiram,Bonjour,Bonjour,Tu ne m’attendais pas ici ? ,N est ce pas ?,Retourne Travailler !,,,,,
-2,NPC-1,Tu veux une astuce ?,Simple pour le QCM,Il n y as toujours qu’une seul bonne réponse,Ettonant non ?,Bon je dois y aller,,,,,
+ID_Dialogue,Personnage,Text1,Text2,Text3,Text4,Text5
+1,Kiram,Bonjour,Haha !,Tu ne m attendais pas ici ?,N est ce pas ?,Retourne Travailler !
+2,NPC-1,Tu veux une astuce ?,Simple pour le QCM,Il n y as toujours qu une seul bonne reponse,Ettonant non ?,Bon je dois y aller
