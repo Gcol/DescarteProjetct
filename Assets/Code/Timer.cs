@@ -60,13 +60,12 @@ public class Timer : MonoBehaviour
 
     public void reset()
     {
-        TimerOn = true;
         TimeLeft = MaxTime;
         motiv.reset();
+        TimerOn = false;
     }
 
     public void ChangeFreeze(){
         TimerOn = !TimerOn;
     }
-
 }
