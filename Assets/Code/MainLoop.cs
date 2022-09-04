@@ -64,6 +64,7 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineStart()
     {
+        endingDay = true;
         clopAnimation.ChangeAnimation("Clope3");
         currentNbClope = maxClope;
         Dialogue.GetComponent<Image>().enabled = false;
@@ -76,6 +77,7 @@ public class MainLoop : MonoBehaviour
         StartCoroutine(CoRoutineActiveLeftPc(true));
         yield return new WaitForSeconds(1);
         MainTimer.SetTimer(true);
+        endingDay = false;
     }
 
     void FadeInAnimation()
@@ -176,11 +178,13 @@ public class MainLoop : MonoBehaviour
 
     public void GoClope()
     {
-        currentNbClope -= 1;
-        if (currentNbClope == 2) clopAnimation.ChangeAnimation("Clope2");
-        if (currentNbClope == 1) clopAnimation.ChangeAnimation("Clope1");
-        if (currentNbClope == 0) clopAnimation.ChangeAnimation("Clope0");
-        if (endingDay == false && currentNbClope >= 0){StartCoroutine(UpdateCamClope());}
+        if (endingDay == false && currentNbClope >= 0){
+            currentNbClope -= 1;
+            if (currentNbClope == 2) clopAnimation.ChangeAnimation("Clope2");
+            if (currentNbClope == 1) clopAnimation.ChangeAnimation("Clope1");
+            if (currentNbClope == 0) clopAnimation.ChangeAnimation("Clope0");
+            StartCoroutine(UpdateCamClope());
+        }
     }
 
     public void UnClope()
