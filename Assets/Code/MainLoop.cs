@@ -11,6 +11,8 @@ public class MainLoop : MonoBehaviour
     public int maxDay = 5;
     public int currentNbClope ;
 
+    public bool FreezeTimer;
+
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
     public MotivationBar motiv;
@@ -52,6 +54,7 @@ public class MainLoop : MonoBehaviour
 
     //Constate
     const int maxClope = 3;
+
     // Start is called before the first frame update
     void Start()
     {
