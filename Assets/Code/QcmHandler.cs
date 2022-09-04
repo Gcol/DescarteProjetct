@@ -130,7 +130,7 @@ public class QcmHandler : MonoBehaviour
 	void updateQuestion()
 	{
 
-       List<int> positionRep= new List<int>{315, 285};
+       List<int> positionRep= new List<int>{655, 585};
 
 
         if (currentListQcm[indexQuestion].reponse3 == ""){
@@ -138,13 +138,13 @@ public class QcmHandler : MonoBehaviour
         }
         else{
             objectRep3.SetActive(true);
-            positionRep.Add(255);
+            positionRep.Add(515);
         }
         if (currentListQcm[indexQuestion].reponse4 == ""){objectRep4.SetActive(false);}
         else
         {
             objectRep4.SetActive(true);
-            positionRep.Add(225);
+            positionRep.Add(445);
         }
 
         ShufflePosition(positionRep);
