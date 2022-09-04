@@ -4120,13 +4120,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   csvFile: {fileID: 4900000, guid: a199ebed60d3f964382088299c341199, type: 3}
   maxQuestion: 3
-  currentDifficulty: 1
+  currentDifficulty: 3
   main: {fileID: 1043659793}
   Question: {fileID: 1347168004}
   Rep1: {fileID: 864218032}
   Rep2: {fileID: 1792015582}
   Rep3: {fileID: 632311657}
   Rep4: {fileID: 1212983263}
+  objectRep1: {fileID: 77420886}
+  objectRep2: {fileID: 650042041}
   objectRep3: {fileID: 1302550904}
   objectRep4: {fileID: 482624984}
   activeResponse1: 0

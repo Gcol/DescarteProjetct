@@ -46,6 +46,8 @@ public class QcmHandler : MonoBehaviour
     public TextMeshProUGUI Rep4;
 
     //GameObject as cacher si pas assez de réponse
+    public GameObject objectRep1;
+    public GameObject objectRep2;
     public GameObject objectRep3;
     public GameObject objectRep4;
 
@@ -127,16 +129,47 @@ public class QcmHandler : MonoBehaviour
 
 	void updateQuestion()
 	{
+
+       List<int> positionRep= new List<int>{315, 285};
+
+
+        if (currentListQcm[indexQuestion].reponse3 == ""){
+            objectRep3.SetActive(false);
+        }
+        else{
+            objectRep3.SetActive(true);
+            positionRep.Add(255);
+        }
+        if (currentListQcm[indexQuestion].reponse4 == ""){objectRep4.SetActive(false);}
+        else
+        {
+            objectRep4.SetActive(true);
+            positionRep.Add(225);
+        }
+
+        ShufflePosition(positionRep);
+
+        ChangePositionRep(objectRep1, positionRep[0]);
+        ChangePositionRep(objectRep2, positionRep[1]);
+
+        if (currentListQcm[indexQuestion].reponse3 != "") ChangePositionRep(objectRep3, positionRep[2]);
+        if (currentListQcm[indexQuestion].reponse4 != "") ChangePositionRep(objectRep4, positionRep[3]);
+
+
         Question.text = currentListQcm[indexQuestion].question;
         Rep1.text = currentListQcm[indexQuestion].reponse1;
         Rep2.text = currentListQcm[indexQuestion].reponse2;
 
         Rep3.text = currentListQcm[indexQuestion].reponse3;
         Rep4.text = currentListQcm[indexQuestion].reponse4;
-        if (currentListQcm[indexQuestion].reponse3 == ""){objectRep3.SetActive(false);}else{objectRep3.SetActive(true);}
-        if (currentListQcm[indexQuestion].reponse4 == ""){objectRep4.SetActive(false);}else{objectRep4.SetActive(true);}
         resetCheckBox();
 	}
+
+    void ChangePositionRep(GameObject currentRep, int newYPosition)
+    {
+        Vector3 pos = currentRep.transform.position;
+        currentRep.transform.position = new Vector3(pos.x, newYPosition, pos.z);
+    }
 
 	void resetCheckBox()
 	{
@@ -162,6 +195,16 @@ public class QcmHandler : MonoBehaviour
             int randomIndex = Random.Range(i, currentListQcm.Count);
             currentListQcm[i] = currentListQcm[randomIndex];
             currentListQcm[randomIndex] = temp;
+        }
+	}
+
+	public void ShufflePosition(List<int> positionRep)
+	{
+        for (int i = 0; i < positionRep.Count; i++) {
+            int temp = positionRep[i];
+            int randomIndex = Random.Range(i, positionRep.Count);
+            positionRep[i] = positionRep[randomIndex];
+            positionRep[randomIndex] = temp;
         }
 	}
 
