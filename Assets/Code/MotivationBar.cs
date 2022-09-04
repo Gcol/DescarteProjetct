@@ -8,6 +8,8 @@ public class MotivationBar : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth ;
     static public float current_percent;
+    public bool motivIdle;
+    public float motivBoost = 10f;
 
     public float SpeedDecrease = -3f;
 
@@ -22,7 +24,7 @@ public class MotivationBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth != maxHealth || SpeedDecrease < 1)
+        if ((currentHealth != maxHealth || SpeedDecrease < 1) && motivIdle == false)
         {
             currentHealth += (Time.deltaTime * SpeedDecrease);
         }
@@ -44,11 +46,22 @@ public class MotivationBar : MonoBehaviour
     public void reset()
     {
         currentHealth = maxHealth;
+        freezeMotivation();
     }
 
-    public void InverseMotivationLose()
+
+    public void freezeMotivation()
     {
-     SpeedDecrease *= -1;
+        motivIdle = true;
     }
 
+    public void unfreezeMotivation()
+    {
+        motivIdle = false;
+    }
+
+    public void pozClopeMotivBoost()
+    {
+        currentHealth += motivBoost;
+    }
 }

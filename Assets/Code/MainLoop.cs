@@ -72,11 +72,13 @@ public class MainLoop : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         AffichageQCM.SetActive(true);
+        motiv.unfreezeMotivation();
 
     }
 
     IEnumerator CoRoutineUnActiveLeftPc()
     {
+        motiv.freezeMotivation();
         AffichageQCM.SetActive(false);
         camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
         yield return new WaitForSeconds(1);
@@ -152,6 +154,7 @@ public class MainLoop : MonoBehaviour
     public void UnClope()
     {
         StartCoroutine(UnUpdateCamClope());
+        motiv.pozClopeMotivBoost();
     }
 
     IEnumerator UnUpdateCamClope()
@@ -163,7 +166,7 @@ public class MainLoop : MonoBehaviour
         StartCoroutine(CoRoutineActiveLeftPc(false));
         isPauseClope = false;
         yield return new WaitForSeconds(1);
-        motiv.InverseMotivationLose();
+        motiv.unfreezeMotivation();
         MainTimer.SetTimer(true);
     }
 
@@ -176,7 +179,6 @@ public class MainLoop : MonoBehaviour
         camControl.ChangeAnimation(CAMERA_GO_PAUSE);
         isPauseClope = true;
         yield return new WaitForSeconds(2.5f);
-        motiv.InverseMotivationLose();
         Dialogue.GetComponent<Image>().enabled = true;
     }
 }
