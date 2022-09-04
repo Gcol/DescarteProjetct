@@ -31,7 +31,6 @@ public class MainLoop : MonoBehaviour
     public bool beginingDay;
 
     //State variable for animation
-    bool isRightPC;
     bool isPauseClope;
 
     //Animation State
@@ -68,29 +67,31 @@ public class MainLoop : MonoBehaviour
         motivationBar.SetActive(true);
         camControl.ChangeAnimation(CAMERA_GO_PLAY);
         yield return new WaitForSeconds(1);
-        StartCoroutine(CoRoutineActiveLeftPc());
+        StartCoroutine(CoRoutineActiveLeftPc(true));
         yield return new WaitForSeconds(1);
         if (FreezeTimer == false)
         {motiv.InverseMotivationLose();}
-        MainTimer.ChangeFreeze();
+        MainTimer.SetTimer(false);
     }
 
-    IEnumerator CoRoutineActiveLeftPc()
+    IEnumerator CoRoutineActiveLeftPc(bool starting)
     {
         camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
-        currentQcm.ShuffleList();
-        currentQcm.StartMiniGame();
+        if (starting == true)
+        {
+            currentQcm.ShuffleList();
+            currentQcm.StartMiniGame();
+        }
         yield return new WaitForSeconds(1);
         AffichageQCM.SetActive(true);
-        isRightPC = false;
 
     }
 
     IEnumerator CoRoutineUnActiveLeftPc()
     {
         AffichageQCM.SetActive(false);
-        yield return new WaitForSeconds(1);
         camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
+        yield return new WaitForSeconds(1);
     }
 
     // Update is called once per frame
@@ -107,25 +108,10 @@ public class MainLoop : MonoBehaviour
 
                 }
                 else {
-
-                    if (true || dayWithMiniGame.Contains(nbDay % 5)){
-                        StartCoroutine(CoRoutineActiveLeftPc());
-
-                    }
-                    else{
-                        camControl.ChangeAnimation(CAMERA_GO_PC_RIGHT);
-                        isRightPC = true;
-                    }
-
-                    MainTimer.ChangeFreeze();
+                    // On va toujours sur le PC de gauche
+                    StartCoroutine(CoRoutineActiveLeftPc(true));
+                    MainTimer.SetTimer(true);
                 }
-            }
-        }
-        if (endingDay == true){
-            if (camControl.ReadyNextAnimation() == true)
-            {
-                beginingDay = true;
-                endingDay = false;
             }
         }
     }
@@ -137,11 +123,8 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineNewDay()
     {
-        if (isRightPC == true)
-        {
-            camControl.ChangeAnimation(CAMERA_GO_PC_UN_RIGHT);
-        }
-        else if (isPauseClope == true)
+        endingDay = true;
+        if (isPauseClope == true)
         {
             camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
             isPauseClope = false;
@@ -150,7 +133,7 @@ public class MainLoop : MonoBehaviour
         {
             StartCoroutine(CoRoutineUnActiveLeftPc());
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         nbDay += 1;
         DayTxt.text = nbDay.ToString();
         motivationBar.SetActive(false);
@@ -164,7 +147,8 @@ public class MainLoop : MonoBehaviour
         textCadreController.ChangeAnimation("TextFadeIn");
         motivationBar.SetActive(true);
         yield return new WaitForSeconds(1);
-        endingDay = true;
+        endingDay = false;
+        beginingDay = true;
     }
 
     void EndGame()
@@ -174,7 +158,7 @@ public class MainLoop : MonoBehaviour
 
     public void GoClope()
     {
-        StartCoroutine(UpdateCamClope());
+        if (endingDay == false){StartCoroutine(UpdateCamClope());}
     }
 
     public void UnClope()
@@ -184,32 +168,21 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator UnUpdateCamClope()
     {
+        AffichageQCM.SetActive(false);
         Dialogue.GetComponent<Image>().enabled = false;
         camControl.ChangeAnimation(CAMERA_GO_UN_PAUSE);
-        yield return new WaitForSeconds(1);
-        if (isRightPC){
-            camControl.ChangeAnimation(CAMERA_GO_PC_RIGHT);
-        }
-        else
-        {
-            camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
-        }
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine(CoRoutineActiveLeftPc(false));
         isPauseClope = false;
         yield return new WaitForSeconds(1);
         motiv.InverseMotivationLose();
-        MainTimer.ChangeFreeze();
+        MainTimer.SetTimer(true);
     }
 
     IEnumerator UpdateCamClope()
     {
-        MainTimer.ChangeFreeze();
-        if (isRightPC){
-            camControl.ChangeAnimation(CAMERA_GO_PC_UN_RIGHT);
-        }
-        else
-        {
-            camControl.ChangeAnimation(CAMERA_GO_PC_UN_LEFT);
-        }
+        MainTimer.SetTimer(false);
+        StartCoroutine(CoRoutineUnActiveLeftPc());
         yield return new WaitForSeconds(1);
 
         camControl.ChangeAnimation(CAMERA_GO_PAUSE);

@@ -65,7 +65,7 @@ public class Timer : MonoBehaviour
         TimerOn = false;
     }
 
-    public void ChangeFreeze(){
-        TimerOn = !TimerOn;
+    public void SetTimer(bool value){
+        TimerOn = value;
     }
 }
