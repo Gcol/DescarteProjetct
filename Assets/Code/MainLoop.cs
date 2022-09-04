@@ -7,11 +7,13 @@ using TMPro;
 
 public class MainLoop : MonoBehaviour
 {
-    int nbDay = 1;
+
+    public int nbDay = 1;
     public int maxDay = 5;
     int currentNbClope;
 
     public bool FreezeTimer;
+
 
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
@@ -19,6 +21,8 @@ public class MainLoop : MonoBehaviour
     public GameObject Dialogue;
 
     public DialogueHandler dialHandler;
+    public IntrOutro introutro;
+    public GameObject Intro;
 
     // Game Object as desactiver en fonction des Zoom de Camera
     public GameObject AffichageQCM;
@@ -59,14 +63,23 @@ public class MainLoop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        endingDay = true;
+        introutro.ActivePannel();
+    }
+
+    public void LaunchGame()
+    {
         StartCoroutine(CoRoutineStart());
     }
 
     IEnumerator CoRoutineStart()
     {
-        endingDay = true;
+        Intro.SetActive(true);
+        FadeOutAnimation();
+        yield return new WaitForSeconds(2);
         clopAnimation.ChangeAnimation("Clope3");
         currentNbClope = maxClope;
+        Dialogue.SetActive(true);
         Dialogue.GetComponent<Image>().enabled = false;
         Dialogue.GetComponent<Button>().enabled = false;
         FadeInAnimation();
@@ -124,11 +137,8 @@ public class MainLoop : MonoBehaviour
             if (camControl.ReadyNextAnimation() == true)
             {
                 beginingDay = false;
-                if (nbDay >= maxDay)
-                {
-                    EndGame();
-
-                }
+                if (nbDay >= maxDay || currentQcm.currentScore == currentQcm.maxScore)
+                    StartCoroutine(PreparingOutro());
                 else {
                     // On va toujours sur le PC de gauche
                     StartCoroutine(CoRoutineActiveLeftPc(true));
@@ -136,6 +146,15 @@ public class MainLoop : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator PreparingOutro()
+    {
+        Dialogue.SetActive(false);
+        motivationBar.SetActive(false);
+        camControl.ChangeAnimation(CAMERA_GO_MENU);
+        yield return new WaitForSeconds(2);
+        introutro.ActivePannel();
     }
 
     public void NewDay()
@@ -171,7 +190,7 @@ public class MainLoop : MonoBehaviour
         beginingDay = true;
     }
 
-    void EndGame()
+    public void EndGame()
     {
         Debug.Log("Fin de parti");
     }
@@ -221,4 +240,5 @@ public class MainLoop : MonoBehaviour
         Dialogue.GetComponent<Button>().enabled = true;
 
     }
+
 }

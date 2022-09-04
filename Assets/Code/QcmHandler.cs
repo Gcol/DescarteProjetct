@@ -72,6 +72,7 @@ public class QcmHandler : MonoBehaviour
     //Variable utilitaire
     int indexQuestion;
     public int currentScore = 0;
+    public int maxScore = 3;
     List<QCMLine> currentListQcm;
 
 	public void Start()

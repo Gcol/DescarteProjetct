@@ -82,13 +82,12 @@ public class DialogueHandler : MonoBehaviour
         }
         else
         {
-            kiramAppear = true;
-            printDialogue.text = "";
+            StartCoroutine(SafeClean());
             main.UnClope();
-            npcDiag.ChangeAnimation("Idle");
             if (indexRowSetence >= allDialogue.Count) Debug.Log("Pas assez de dialogue");
             indexRowSetence += 1;
             indexReadSentence = 0;
+
         }
 
     }
@@ -102,6 +101,15 @@ public class DialogueHandler : MonoBehaviour
             kiramAppear = false;
         }
         npcDiag.ChangeAnimation("RevealKiramIdle");
+    }
+
+    IEnumerator SafeClean()
+    {
+        kiramAppear = true;
+        printDialogue.text = "";
+        npcDiag.ChangeAnimation("Idle");
+        yield return new WaitForSeconds(1);
+        npcDiag.ChangeAnimation("Idle");
     }
 
 	public string[] SplitCsvLine(string line)
