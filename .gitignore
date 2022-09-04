@@ -59,3 +59,9 @@ crashlytics-build.properties
 *.zip
 
 UserSettings/Layouts/default-2021.dwlt
+
+UserSettings/Layouts/default-2022.dwlt
+
+Assets/StreamingAssets.meta
+
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
