@@ -160,8 +160,8 @@ public class MainLoop : MonoBehaviour
         DayTxt.text = nbDay.ToString();
         motivationBar.SetActive(false);
         FadeOutAnimation();
-        MainTimer.reset();
         yield return new WaitForSeconds(3);
+        MainTimer.reset();
         FadeInAnimation();
         motivationBar.SetActive(true);
         yield return new WaitForSeconds(1);

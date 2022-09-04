@@ -17,8 +17,8 @@ public class Timer : MonoBehaviour
     public SpriteRenderer Arrow;
     public SpriteRenderer MinArrow;
 
-    private float baseAngle = 130f;
-    private int divAngle = 255;
+    float baseAngle = 80f;
+    int divAngle = 255;
 
     // Start is called before the first frame update
     void Start()
@@ -35,33 +35,37 @@ public class Timer : MonoBehaviour
             if (TimeLeft > 0)
             {
                 TimeLeft -= (Time.deltaTime * SpeedTime);
-                float z = baseAngle - ((100 -(TimeLeft / MaxTime)) * divAngle);
-                Arrow.transform.rotation = Quaternion.Euler(
-                    Arrow.transform.rotation.x,
-                    Arrow.transform.rotation.y,
-                    z
-                );
-                MinArrow.transform.rotation = Quaternion.Euler(
-                    Arrow.transform.rotation.x,
-                    Arrow.transform.rotation.y,
-                    z * 60
-                );
-
+                UpdateClockPosition();
             }
             else
             {
                 TimeLeft = 0;
                 TimerOn = false;
                 mainGame.NewDay();
-
             }
         }
+    }
+    public void UpdateClockPosition()
+    {
+        float z = baseAngle - ((100 -(TimeLeft / MaxTime)) * divAngle);
+        Arrow.transform.rotation = Quaternion.Euler(
+            Arrow.transform.rotation.x,
+            Arrow.transform.rotation.y,
+            z
+        );
+        MinArrow.transform.rotation = Quaternion.Euler(
+            Arrow.transform.rotation.x,
+            Arrow.transform.rotation.y,
+            z * 60
+        );
+
     }
 
     public void reset()
     {
         TimeLeft = MaxTime;
         motiv.reset();
+        UpdateClockPosition();
         TimerOn = false;
     }
 
