@@ -12,10 +12,10 @@ public class Timer : MonoBehaviour
     private float TimeLeft;
     private float SpeedTime = 0;
 
-    public TextMeshProUGUI TimerTxt;
     public MotivationBar motiv;
     public MainLoop mainGame;
     public SpriteRenderer Arrow;
+    public SpriteRenderer MinArrow;
 
     private float baseAngle = 130f;
     private int divAngle = 255;
@@ -36,13 +36,17 @@ public class Timer : MonoBehaviour
             {
                 TimeLeft -= (Time.deltaTime * SpeedTime);
                 float z = baseAngle - ((100 -(TimeLeft / MaxTime)) * divAngle);
-                Debug.Log( Arrow.transform.rotation.z);
-                Debug.Log(z);
                 Arrow.transform.rotation = Quaternion.Euler(
                     Arrow.transform.rotation.x,
                     Arrow.transform.rotation.y,
                     z
                 );
+                MinArrow.transform.rotation = Quaternion.Euler(
+                    Arrow.transform.rotation.x,
+                    Arrow.transform.rotation.y,
+                    z * 60
+                );
+
             }
             else
             {
@@ -51,17 +55,7 @@ public class Timer : MonoBehaviour
                 mainGame.NewDay();
 
             }
-            updateTimer(TimeLeft);
         }
-    }
-
-    void updateTimer(float currentTime)
-    {
-
-        float minutes = Mathf.FloorToInt(currentTime / 60);
-        float secondes = Mathf.FloorToInt(currentTime % 60);
-
-        TimerTxt.text = string.Format("{0:00} : {1:00}", minutes, secondes);
     }
 
     public void reset()

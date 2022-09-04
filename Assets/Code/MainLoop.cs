@@ -10,10 +10,14 @@ public class MainLoop : MonoBehaviour
     int nbDay = 1;
     public int maxDay = 5;
 
+    public bool FreezeTimer;
+
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
     public MotivationBar motiv;
     public GameObject Dialogue;
+
+    public GameObject AffichageQCM;
 
     public CameraAnimationController camControl;
     public CameraAnimationController fadeController;
@@ -61,9 +65,17 @@ public class MainLoop : MonoBehaviour
         yield return new WaitForSeconds(2);
         camControl.ChangeAnimation(CAMERA_GO_PLAY);
         yield return new WaitForSeconds(1);
-        camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
-        motiv.InverseMotivationLose();
+        StartCoroutine(CoRoutineActiveLeftPc());
+        yield return new WaitForSeconds(1);
+        if (FreezeTimer == false)
+        {motiv.InverseMotivationLose();}
+    }
 
+    IEnumerator CoRoutineActiveLeftPc()
+    {
+        camControl.ChangeAnimation(CAMERA_GO_PC_LEFT);
+        yield return new WaitForSeconds(1);
+        AffichageQCM.SetActive(true);
     }
 
     // Update is called once per frame
@@ -155,7 +167,6 @@ public class MainLoop : MonoBehaviour
 
     public void NextDialogue()
     {
-        Debug.Log("TEST");
         UnClope();
     }
 

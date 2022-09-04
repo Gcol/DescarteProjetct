@@ -1,14 +1,197 @@
+
 using UnityEngine;
-using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using TMPro;
 
-public class CSVReader
+public class QCMLine
 {
-    	
-    void Start()
-    {
-    }
+    public string difficulty;
+    public string question;
+    public string reponse1;
+    public string reponse2;
+    public string reponse3;
+    public string reponse4;
 
+    public QCMLine(string new_difficulty, string new_question, string new_reponse1, string new_reponse2, string new_reponse3, string new_reponse4)
+    {
+        difficulty = new_difficulty;
+        question = new_question;
+        reponse1 = new_reponse1;
+        reponse2 = new_reponse2;
+        reponse3 = new_reponse3;
+        reponse4 = new_reponse4;
+    }
+}
+
+public class CSVReader : MonoBehaviour
+{
+    public TextAsset csvFile;
+    public int currentDifficulty = 3;
+    public int maxQuestion = 3;
+
+    public int currentScore = 0;
+
+    int indexQuestion;
+
+    //Text pour modifier les questions
+    public TextMeshProUGUI Question;
+    public TextMeshProUGUI Rep1;
+    public TextMeshProUGUI Rep2;
+    public TextMeshProUGUI Rep3;
+    public TextMeshProUGUI Rep4;
+
+    public GameObject objectRep3;
+    public GameObject objectRep4;
+
+    //Boolean pour verifier l etat des checkBox
+    public bool activeResponse1;
+    public bool activeResponse2;
+    public bool activeResponse3;
+    public bool activeResponse4;
+
+    //CheckBox pour les caché
+    public GameObject textResponse1;
+    public GameObject textResponse2;
+    public GameObject textResponse3;
+    public GameObject textResponse4;
+
+    //Pour éviter de nombreuse boucle de recherche je met en dur les difficulté
+    List<QCMLine> List_QCMLine_3 = new List<QCMLine>();
+    List<QCMLine> List_QCMLine_2 = new List<QCMLine>();
+    List<QCMLine> List_QCMLine_1 = new List<QCMLine>();
+    List<QCMLine> currentListQcm;
+
+	public void Start()
+	{
+	    bool header = true;
+	    List<QCMLine> List_QCMLine = new List<QCMLine>();
+
+        string[] linesInFile = csvFile.text.Split('\n');
+
+        foreach (string line in linesInFile)
+        {
+            if (line != "")
+            {
+                List<string> new_read = new List<string>();
+                string[] all_value = SplitCsvLine(line);
+
+                if (header == false)
+                {
+                    string curr_rep2;
+                    string curr_rep3;
+                    string curr_rep4;
+                    string difficulty = all_value[0];
+
+                    if (all_value.Length < 4){curr_rep2 = "";} else {curr_rep2 =  all_value[3];}
+                    if (all_value.Length < 5){curr_rep3 = "";} else {curr_rep3 =  all_value[4];}
+                    if (all_value.Length < 6){curr_rep4 = "";} else {curr_rep4 =  all_value[5];}
+
+                    if (difficulty == "1")
+                    {
+                        List_QCMLine_1.Add( new QCMLine(difficulty, all_value[1], all_value[2], curr_rep2, curr_rep3, curr_rep4));
+                    }
+                    else if (difficulty == "2")
+                    {
+                        List_QCMLine_2.Add( new QCMLine(difficulty, all_value[1], all_value[2], curr_rep2, curr_rep3, curr_rep4));
+                    }
+                    else if (difficulty == "3")
+                    {
+                        List_QCMLine_3.Add( new QCMLine(difficulty, all_value[1], all_value[2], curr_rep2, curr_rep3, curr_rep4));
+                    }
+                }
+                else{header=false;}
+            }
+        }
+
+	    if (currentDifficulty == 1){currentListQcm = List_QCMLine_1;}
+	    if (currentDifficulty == 2){currentListQcm = List_QCMLine_2;}
+	    if (currentDifficulty == 3){currentListQcm = List_QCMLine_3;}
+        ShuffleList();
+        StartMiniGame();
+	}
+
+	public void StartMiniGame()
+	{
+	    indexQuestion = 0;
+        currentScore = 0;
+        updateQuestion();
+	}
+
+	void updateQuestion()
+	{
+        Question.text = currentListQcm[indexQuestion].question;
+        Rep1.text = currentListQcm[indexQuestion].reponse1;
+        Rep2.text = currentListQcm[indexQuestion].reponse2;
+
+        Rep3.text = currentListQcm[indexQuestion].reponse3;
+        Rep4.text = currentListQcm[indexQuestion].reponse4;
+        if (currentListQcm[indexQuestion].reponse3 == ""){objectRep3.SetActive(false);}else{objectRep3.SetActive(true);}
+        if (currentListQcm[indexQuestion].reponse4 == ""){objectRep4.SetActive(false);}else{objectRep4.SetActive(true);}
+        resetCheckBox();
+	}
+
+	void resetCheckBox()
+	{
+        activeResponse1 = false;
+        activeResponse2 = false;
+        activeResponse3 = false;
+        activeResponse4 = false;
+        textResponse1.SetActive(false);
+        textResponse2.SetActive(false);
+        textResponse3.SetActive(false);
+        textResponse4.SetActive(false);
+	}
+
+	public void CloseMiniGame()
+	{
+        ShuffleList();
+	}
+
+	void ShuffleList()
+	{
+        for (int i = 0; i < currentListQcm.Count; i++) {
+            QCMLine temp = currentListQcm[i];
+            int randomIndex = Random.Range(i, currentListQcm.Count);
+            currentListQcm[i] = currentListQcm[randomIndex];
+            currentListQcm[randomIndex] = temp;
+        }
+	}
+
+	public string[] SplitCsvLine(string line)
+	{
+	    return (from System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(line,
+		@"(((?<x>(?=[,\r\n]+))|""(?<x>([^""]|"""")+)""|(?<x>[^,\r\n]+)),?)",
+		System.Text.RegularExpressions.RegexOptions.ExplicitCapture)
+		select m.Groups[1].Value).ToArray();
+	}
+
+    public void setRep1(){
+	    activeResponse1 = !activeResponse1;
+	    textResponse1.SetActive(activeResponse1);
+	}
+
+    public void setRep2(){
+	    activeResponse2 = !activeResponse2;
+	    textResponse2.SetActive(activeResponse2);
+	}
+
+    public void setRep3(){
+	    activeResponse3 = !activeResponse3;
+	    textResponse3.SetActive(activeResponse3);
+	}
+
+    public void setRep4(){
+	    activeResponse4 = !activeResponse4;
+	    textResponse4.SetActive(activeResponse4);
+	}
+
+	public void checkReponse(){
+	    if (activeResponse1 == true && activeResponse2 == false && activeResponse3 == false && activeResponse4 == false){currentScore += 1;}
+	    indexQuestion += 1;
+
+	    if (indexQuestion < maxQuestion){updateQuestion();}
+	    //TODO voir avec Yann quoi faire sinon
+	}
 }
