@@ -64,7 +64,7 @@ public class MainLoop : MonoBehaviour
 
     IEnumerator CoRoutineStart()
     {
-        clopAnimation.ChangeAnimation("Clop3");
+        clopAnimation.ChangeAnimation("Clope3");
         currentNbClope = maxClope;
         Dialogue.GetComponent<Image>().enabled = false;
         Dialogue.GetComponent<Button>().enabled = false;
@@ -144,7 +144,6 @@ public class MainLoop : MonoBehaviour
     IEnumerator CoRoutineNewDay()
     {
         currentNbClope = maxClope;
-        clopAnimation.ChangeAnimation("Clop3");
         endingDay = true;
         if (isPauseClope == true)
         {
@@ -164,6 +163,7 @@ public class MainLoop : MonoBehaviour
         MainTimer.reset();
         FadeInAnimation();
         motivationBar.SetActive(true);
+        clopAnimation.ChangeAnimation("Clope3");
         yield return new WaitForSeconds(1);
         endingDay = false;
         beginingDay = true;
