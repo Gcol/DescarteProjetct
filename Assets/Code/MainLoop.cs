@@ -10,8 +10,6 @@ public class MainLoop : MonoBehaviour
     int nbDay = 1;
     public int maxDay = 5;
 
-    public bool FreezeTimer;
-
     public TextMeshProUGUI DayTxt;
     public Timer MainTimer;
     public MotivationBar motiv;
@@ -44,19 +42,11 @@ public class MainLoop : MonoBehaviour
     const string CAMERA_GO_PLAY = "Play";
     const string CAMERA_GO_IDLE = "Idle";
 
-    //Constante
-    List<int> dayWithMiniGame = new List<int>();
-
     // Start is called before the first frame update
     void Start()
     {
-        motiv.InverseMotivationLose();
-        dayWithMiniGame.Add(1);
-        dayWithMiniGame.Add(3);
-        dayWithMiniGame.Add(5);
         StartCoroutine(CoRoutineStart());
     }
-
 
     IEnumerator CoRoutineStart()
     {
@@ -69,9 +59,7 @@ public class MainLoop : MonoBehaviour
         yield return new WaitForSeconds(1);
         StartCoroutine(CoRoutineActiveLeftPc(true));
         yield return new WaitForSeconds(1);
-        if (FreezeTimer == false)
-        {motiv.InverseMotivationLose();}
-        MainTimer.SetTimer(false);
+        MainTimer.SetTimer(true);
     }
 
     IEnumerator CoRoutineActiveLeftPc(bool starting)

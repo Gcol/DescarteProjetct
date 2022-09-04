@@ -8,7 +8,6 @@ public class MotivationBar : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth ;
     static public float current_percent;
-    public float StartDebuf = 50;
 
     public float SpeedDecrease = -3f;
 
@@ -32,6 +31,7 @@ public class MotivationBar : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+
         current_percent = currentHealth / maxHealth;
         HealthBar.fillAmount = current_percent;
     }
@@ -43,7 +43,7 @@ public class MotivationBar : MonoBehaviour
 
     public void reset()
     {
-        currentHealth = maxHealth - StartDebuf;
+        currentHealth = maxHealth;
     }
 
     public void InverseMotivationLose()
