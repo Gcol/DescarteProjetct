@@ -25,15 +25,18 @@ public class QCMLine
     }
 }
 
-public class CSVReader : MonoBehaviour
+public class QcmHandler : MonoBehaviour
 {
+    //Source
     public TextAsset csvFile;
-    public int currentDifficulty = 3;
+
+    //Default_gestion
     public int maxQuestion = 3;
+    public int currentDifficulty = 3;
 
-    public int currentScore = 0;
+    //pour reset en cas de fin d activite
+    public MainLoop main;
 
-    int indexQuestion;
 
     //Text pour modifier les questions
     public TextMeshProUGUI Question;
@@ -42,6 +45,7 @@ public class CSVReader : MonoBehaviour
     public TextMeshProUGUI Rep3;
     public TextMeshProUGUI Rep4;
 
+    //GameObject as cacher si pas assez de réponse
     public GameObject objectRep3;
     public GameObject objectRep4;
 
@@ -61,6 +65,11 @@ public class CSVReader : MonoBehaviour
     List<QCMLine> List_QCMLine_3 = new List<QCMLine>();
     List<QCMLine> List_QCMLine_2 = new List<QCMLine>();
     List<QCMLine> List_QCMLine_1 = new List<QCMLine>();
+
+
+    //Variable utilitaire
+    int indexQuestion;
+    public int currentScore = 0;
     List<QCMLine> currentListQcm;
 
 	public void Start()
@@ -74,7 +83,6 @@ public class CSVReader : MonoBehaviour
         {
             if (line != "")
             {
-                List<string> new_read = new List<string>();
                 string[] all_value = SplitCsvLine(line);
 
                 if (header == false)
@@ -108,8 +116,6 @@ public class CSVReader : MonoBehaviour
 	    if (currentDifficulty == 1){currentListQcm = List_QCMLine_1;}
 	    if (currentDifficulty == 2){currentListQcm = List_QCMLine_2;}
 	    if (currentDifficulty == 3){currentListQcm = List_QCMLine_3;}
-        ShuffleList();
-        StartMiniGame();
 	}
 
 	public void StartMiniGame()
@@ -149,7 +155,7 @@ public class CSVReader : MonoBehaviour
         ShuffleList();
 	}
 
-	void ShuffleList()
+	public void ShuffleList()
 	{
         for (int i = 0; i < currentListQcm.Count; i++) {
             QCMLine temp = currentListQcm[i];
@@ -192,6 +198,7 @@ public class CSVReader : MonoBehaviour
 	    indexQuestion += 1;
 
 	    if (indexQuestion < maxQuestion){updateQuestion();}
+	    else{main.NewDay();}
 	    //TODO voir avec Yann quoi faire sinon
 	}
 }
