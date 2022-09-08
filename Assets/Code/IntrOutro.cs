@@ -54,8 +54,6 @@ public class IntrOutro : MonoBehaviour
     {
         if (qcm.currentScore == qcm.maxScore && indexRowSetence == 1)
         {
-            Debug.Log(main.nbDay);
-            Debug.Log( main.maxDay);
             if (main.nbDay != main.maxDay) indexRowSetence = 3;
             else indexRowSetence = 2;
         }

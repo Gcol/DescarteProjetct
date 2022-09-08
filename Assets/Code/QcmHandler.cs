@@ -30,13 +30,16 @@ public class QcmHandler : MonoBehaviour
     //Source
     public TextAsset csvFile;
 
-    //Default_gestion
+    //Default gestion
     public int maxQuestion = 3;
     public int currentDifficulty = 3;
 
     //pour reset en cas de fin d activite
     public MainLoop main;
 
+    //Text pour modifier l affichage du score en fin de journee
+    public TextMeshProUGUI maxScoreText;
+    public TextMeshProUGUI currentScoreText;
 
     //Text pour modifier les questions
     public TextMeshProUGUI Question;
@@ -71,12 +74,14 @@ public class QcmHandler : MonoBehaviour
 
     //Variable utilitaire
     int indexQuestion;
-    public int currentScore = 0;
+    public int currentScore = 10;
     public int maxScore = 3;
     List<QCMLine> currentListQcm;
 
 	public void Start()
 	{
+	    maxScoreText.text = maxScore.ToString();
+        currentScoreText.text = currentScore.ToString();
 	    bool header = true;
 	    List<QCMLine> List_QCMLine = new List<QCMLine>();
 
@@ -242,7 +247,9 @@ public class QcmHandler : MonoBehaviour
 	    indexQuestion += 1;
 
 	    if (indexQuestion < maxQuestion){updateQuestion();}
-	    else{main.NewDay();}
-	    //TODO voir avec Yann quoi faire sinon
+	    else{
+	        currentScoreText.text = currentScore.ToString();
+	        main.NewDay();
+	    }
 	}
 }

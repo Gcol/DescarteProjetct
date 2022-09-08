@@ -1,50 +1,41 @@
 Difficulty,Question,ValidAnswer,InvalidAns1,InvalidAns2,InvalidAns3
-3,"Qu elles est la couleur suppose d un cheval ayant appartenue a un grand general francais, mais pas trop grand quand meme","blanc casse, de type ecrin as cheval un peu boiteau","Blanc mais cendre, encore plus qu un volcan en eruption","Blanc jaunatre, ternie par la poussiere de la vie","Blanc, depuis quand c est une couleur, c est un valeur, alors je vais dire blanc mais pas trop"
-2,Qu elles est la coleur de mon pc ?,Gris Antracite,Gris pluton,Noir,
-1,Qu est la couleur du ciel ?,Bleu,Rouge,,
-3,Moiste ? Burger ? Moist ! Burger !,Mois,Burger,Moist,Burger
-2,Que manger ce soir ?,Pizza,Burger,Sushi,
-1,CareJam,Oui,Non,,
-3,Test 1 2 3,Rate,Ok,Ko,Obiwanennoby
-2,Ca marcher toujours ?,Non,Jamais,Parfois,
-1,Est ce la plus facile ?,Oui,Non,,
 ,,,,,
 3,"Select prenom, adresse, couleur_voiture from clients where country in (france, belgium, italy) and facture = false","Carlos, 22 rue republique, blanche","Jean, 9 avenue montant, noire","Andre, 3 rue avenir, verte","Bernard, 41 rue liberte, grise"
-2,Comment selectionner les enregistrements presents dans 2 tables ?,inner join,outer join,left join,
-1,Par quoi commencer une requete SQL ?,SELECT,bonjour,,
+2,Comment selectionner les enregistrements presents dans 2 tables ?,inner join,outer join,left join,
+1,Par quoi commencer une requete SQL ?,SELECT,bonjour,,
 ,,,,,
-3,Combien de combinaisons differentes peut-on avoir dans un byte ?,256,8,25,10
-2,Comment appelle-t-on l’unite de base dans un reseau ?,Un nœud,Un volt,Un point,
+3,Combien de combinaisons differentes peut-on avoir dans un byte ?,256,8,25,10
+2,Comment appelle-t-on l unite de base dans un reseau ?,Un noeud,Un volt,Un point,
 1,"Pour un nombre entier qui peut aller de 1 a 100, j utilise un",integer,boolean,,
 ,,,,,
-3,La mise-a-jour automatique du panier que j essaie d implementer ne fonctionne pas correctement – que faire ?,F12,F11,F5,F4
-2,Le client veut un site dynamique permettant de mettre a jour son e-mail – quelle est la techno-cle a utiliser ?,JS,HTML,CSS,
+3,"La mise-a-jour automatique du panier que j essaie d implementer ne fonctionne pas correctement, que faire ?",F12,F11,F5,F4
+2,Un noeud,JS,HTML,CSS,
 1,Contient le formatting de mon texte,CSS,imprimante,,
 ,,,,,
 3,Langage ancien encore tres utilise par les banques,Cobol,Assembleur,C,PL-2
-2,Comment sortir d’une fonction ?,return,help,sos,
+2,Comment sortir d une fonction ?,return,help,sos,
 1,"En C sharp, je finis mes lignes avec",point virgule,"merci, bonne journee",,
 ,,,,,
-3,Je suis une start-up bankable que ses shareholders met en avant dans leurs portfolios – je suis je suis je suis...,une licorne,un lion,une manticore,un éléphant
-2,Qu’est-ce-qui caracterise un batch ?,Pas d intervention humaine requise,Permet d’avoir acces au code,N est jamais utilise seul,
+3,"Je suis une start-up bankable que ses shareholders met en avant dans leurs portfolios, je suis je suis je suis...",une licorne,un lion,une manticore,un elephant
+2,Qu est-ce-qui caracterise un batch ?,Pas d intervention humaine requise,Permet d avoir acces au code,N est jamais utilise seul,
 1,Une IHM permet,d interagir avec la machine,de garer sa voiture dans l abimer,,
 ,,,,,
-3,,,,,
-2,,,,,
+3,Lorem ipsum dolor sit amet ,consectetur ,adipiscing ,elit ,dolor 
+2,Phasellus vestibulum nulla eget ,fermentum ,tincidunt ,velit ,
 1,Full-stack veut dire,Front end + Back end,qu il faut vider ta stack frer wsh,,
 ,,,,,
-3,,,,,
-2,,,,,
+3,In hac ,habitasse ,platea ,dictumst,Vivamus 
+2,Nunc sed magna ac lorem ,porta ,sollicitudin ,lectus ,
 1,Le croning permet de lancer un programme,a une heure donnee,a 120m au sud-est par beau temps,,
 ,,,,,
-3,"La feature ne fonctionne pas alors que les specs sont correctes d apres le PO, le metier et le TL – la faute a qui ?",Jacques,Jean-Michel,Berthier,Jacqueline
-2,A quoi sert un ice breaker ?,A mettre a l aise les participants,A degeler sa voiture,A naviguer les oceans glaces,
+3,"La feature ne fonctionne pas alors que les specs sont correctes d apres le PO, le metier et le TL, la faute a qui ?",Jacques,Jean-Michel,Berthier,Jacqueline
+2,A quoi sert un ice breaker ?,A mettre a l aise les participants,A degeler sa voiture,A naviguer les oceans glaces,
 1,L agilite c est,une facon de travailler moderne,vital pour eviter les balles,,
 ,,,,,
-3,,,,,
-2,,,,,
-1,"J ai fini de coder, que dois-je faire ?",Commit + push sur git,"Tire la chasse, pense qu suivant",,
+3,Donec rhoncus ,facilisis ,nibh ,ut ,porttitor 
+2,"Donec sollicitudin leo at urna scelerisque, maximus bibendum ",arcu ,euismod ,efficitur ,
+1,"J ai fini de coder, que dois-je faire ?",Commit + push sur git,"Tire la chasse, pense qu suivant",,
 ,,,,,
-3,,,,,
-2,,,,,
-1,A quoi sert regex ?,A remplacer des caracteres,Il fait briller les couverts et sent bon,,
+3,Aliquam ut nisi in dolor congue ,facilisis ,eget ,ut ,lorem 
+2,"In posuere, sem eget fringilla convallis, libero nunc ",efficitur ,leo ,quis ,
+1,A quoi sert regex ?,A remplacer des caracteres,Il fait briller les couverts et sent bon,,

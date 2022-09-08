@@ -23,20 +23,32 @@ public class MainLoop : MonoBehaviour
     public DialogueHandler dialHandler;
     public IntrOutro introutro;
     public GameObject Intro;
+    public GameObject Extro;
 
     // Game Object as desactiver en fonction des Zoom de Camera
     public GameObject AffichageQCM;
     public GameObject motivationBar;
 
-
     public QcmHandler currentQcm;
 
-    // Animator utiliser pour lancer les animation
+    // Animator utiliser pour lancer les animation d'entre niveau
     public CameraAnimationController camControl;
     public CameraAnimationController fadeController;
     public CameraAnimationController cadreController;
     public CameraAnimationController textCadreController;
+
+    public CameraAnimationController maxScoreController;
+    public CameraAnimationController scoreInfoController;
+    public CameraAnimationController currentScoreController;
+
+    // Animator utiliser pour lancer les animations des objets sur la scene
     public CameraAnimationController clopAnimation;
+
+
+    // Animator pour l'extro
+    public CameraAnimationController fadeExtroController;
+    public CameraAnimationController cadreExtroController;
+    public CameraAnimationController textExtroCadreController;
 
 
     //Variable pour gerer les cas d overlap d animation peux etre remplacer par des co Routines
@@ -63,6 +75,7 @@ public class MainLoop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Extro.SetActive(false);
         endingDay = true;
         introutro.ActivePannel();
     }
@@ -97,14 +110,20 @@ public class MainLoop : MonoBehaviour
     {
         fadeController.ChangeAnimation("FadeIn");
         cadreController.ChangeAnimation("TextFadeIn");
+        maxScoreController.ChangeAnimation("TextFadeIn");
+        scoreInfoController.ChangeAnimation("TextFadeIn");
         textCadreController.ChangeAnimation("TextFadeIn");
+        currentScoreController.ChangeAnimation("TextFadeIn");
     }
 
     void FadeOutAnimation()
     {
         fadeController.ChangeAnimation("FadeOut");
         cadreController.ChangeAnimation("TextFadeOut");
+        maxScoreController.ChangeAnimation("TextFadeOut");
+        scoreInfoController.ChangeAnimation("TextFadeOut");
         textCadreController.ChangeAnimation("TextFadeOut");
+        currentScoreController.ChangeAnimation("TextFadeOut");
     }
 
     IEnumerator CoRoutineActiveLeftPc(bool starting)
@@ -132,6 +151,10 @@ public class MainLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
         if (beginingDay == true)
         {
             if (camControl.ReadyNextAnimation() == true)
@@ -192,7 +215,16 @@ public class MainLoop : MonoBehaviour
 
     public void EndGame()
     {
-        Debug.Log("Fin de parti");
+        StartCoroutine(CloseGame());
+    }
+
+    IEnumerator CloseGame(){
+        Extro.SetActive(true);
+        fadeExtroController.ChangeAnimation("FadeOut");
+        cadreExtroController.ChangeAnimation("TextFadeOut");
+        textExtroCadreController.ChangeAnimation("TextFadeOut");
+        yield return new WaitForSeconds(5);
+        Application.Quit();
     }
 
     public void GoClope()
